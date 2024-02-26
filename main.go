@@ -133,19 +133,16 @@ func (board *ChessBoard) MovePawn(currentPosition uint64, newPosition uint64) {
         fmt.Println("There is already a piece in the destination")
         return
     }
+    //Check if the pawn is in it's starting position
     if (currentPosition & board.WhitePawns & 0xFF00) != 0 {
-        fmt.Println("The pawn is in it's starting position")
-        if ((currentPosition << 16) == newPosition) {
-            fmt.Println("Pawns can move two squares")
-            
+        if ((currentPosition << 16) & newPosition) != 0 {
             board.WhitePawns ^= currentPosition
             board.WhitePawns |= newPosition
             return
         }
     }
     if (currentPosition & board.WhitePawns) != 0 {
-        if((currentPosition << 8) == newPosition) {
-            fmt.Println("Pawns can move one square")
+        if((currentPosition << 8) &  newPosition) != 0 {
             board.WhitePawns ^= currentPosition
             board.WhitePawns |= newPosition
             return
@@ -161,6 +158,5 @@ func main() {
     board.PrintBoard()
     board.MovePawn(E4, E5)
     board.PrintBoard()
-    fmt.Println(E2<<16==E4)
 }
 
