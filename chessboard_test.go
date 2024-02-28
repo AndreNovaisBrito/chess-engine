@@ -15,6 +15,7 @@ func TestMovePawn(t *testing.T) {
         t.Errorf("Expected %d, got %d", expected, result)
     }
 
+    fmt.Println("Done")
     fmt.Println("Testing if Pawn can move two squares")
 
     board2 := NewChessBoard()
@@ -26,6 +27,7 @@ func TestMovePawn(t *testing.T) {
     if (result & expected) == 0 {
         t.Errorf("Expected %d, got %d", expected, result)
     }
+    fmt.Println("Done")
 
     fmt.Println("Testing if Pawn can't move two squares while not in it's starting position, it should print Invalid Move")
     board3 := NewChessBoard()
@@ -38,4 +40,5 @@ func TestMovePawn(t *testing.T) {
     if (result & expected) == 0 {
         t.Errorf("Expected %d, got %d", expected, result)
     }
+    fmt.Println("Done")
 }
