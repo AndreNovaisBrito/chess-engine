@@ -124,8 +124,31 @@ func (board *ChessBoard) PrintBoard() {
 	fmt.Println()
 }
 
+func (board *ChessBoard) PrintPiece() {
+	for row := 7; row >= 0; row-- {
+		for col := 0; col <= 7; col++ {
+			bit := getBit(board.WhitePawns, uint8(row), uint8(col))
+			if bit == 1 {
+				fmt.Print("1 ")
+			} else {
+				fmt.Print("0 ")
+			}
+		}
+		fmt.Println()
+	}
+	fmt.Println()
+}
+
 func getBit(bitboard uint64, row, col uint8) uint8 {
 	return uint8((bitboard >> (row*8 + col)) & 1)
+}
+
+func (board *ChessBoard) PromoteWhitePawn(newPosition uint64){
+    if newPosition & rowMask(7) != 0 {
+        board.WhitePawns^= newPosition
+        board.WhiteQueens |= newPosition
+    }
+    fmt.Println("White Pawn didn't promote D:")
 }
 
 func (board *ChessBoard) MoveWhitePawn(currentPosition uint64, newPosition uint64) {
@@ -150,6 +173,7 @@ func (board *ChessBoard) MoveWhitePawn(currentPosition uint64, newPosition uint6
         if((currentPosition << 8) &  newPosition) != 0 {
             board.WhitePawns ^= currentPosition
             board.WhitePawns |= newPosition
+            board.PromoteWhitePawn(newPosition)
             return
         }
     }
@@ -183,6 +207,12 @@ func (board *ChessBoard) MoveBlackPawn(currentPosition uint64, newPosition uint6
     }
     fmt.Println("Invalid Move")
 }
+// rowMask creates a mask for a specific row given a row index (0-7)
+func rowMask(row int) uint64 {
+    return uint64(255) << uint(8*row)
+}
+
+
 
 func (board *ChessBoard) WhitePawnCapture(currentPosition uint64, newPosition uint64) {
     allPieces := board.WhitePawns | board.WhiteKnights | board.WhiteBishops |
@@ -289,5 +319,17 @@ func main() {
     board.PrintBoard()
     board.MoveBlackPawn(D5, D4)
     board.PrintBoard()
+    row1Mask := rowMask(1)
+
+    // Print row1Mask in binary
+    fmt.Printf("Row 1 mask in binary: %064b\n", row1Mask)
+  // fmt.Printf("White queens at %064b\n", board.WhiteQueens)
+
+    board2 := NewChessBoard()
+    board2.WhitePawns |= A7
+    board2.BlackRooks ^= A8
+    board2.MoveWhitePawn(A7, A8)
+    fmt.Printf("White queens at %064b\n", board2.WhiteQueens)
+    board2.PrintPiece() 
 }
 
