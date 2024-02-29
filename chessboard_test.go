@@ -1,7 +1,7 @@
 package main
 
 import (
-    "testing";
+    "testing"
     "fmt"
 )
 func TestMovePawn(t *testing.T) {
