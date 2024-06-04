@@ -1,3 +1,3 @@
-module github.com/AndreNovaisBrito/chess-engine
+module github.com/andrenovaisbrito/chess-engine
 
 go 1.22.2
