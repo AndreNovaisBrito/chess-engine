@@ -27,7 +27,7 @@ func (board *ChessBoard) MoveBishop(currentPosition, newPosition uint64) {
 
 		if currentPosition&board.BlackBishops != 0 {
 			if newPosition&blackPieces != 0 {
-				fmt.Println("Não pode capturar sua própria peça")
+				fmt.Println("Can't capture own piece")
 				return
 			}
 			if newPosition&whitePieces != 0 {
@@ -39,7 +39,7 @@ func (board *ChessBoard) MoveBishop(currentPosition, newPosition uint64) {
 		}
 	}
 
-	fmt.Println("Movimento inválido para o bispo")
+	fmt.Println("Invalid Move")
 }
 
 func isBishopMove(currentPosition, newPosition uint64) bool {
