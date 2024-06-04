@@ -1,0 +1,4 @@
+services:
+  chess-engine:
+    container_name: chess-engine
+    image: chess-engine:0.1.0
